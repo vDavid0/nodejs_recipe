@@ -1,0 +1,85 @@
+<%- include('header') -%>
+
+<div class="container">
+  <h1>
+    <% if (typeof recipe === 'undefined') { %>
+      New Recipe
+    <% }else{ %>
+      Modify Recipe
+    <% } %>
+  </h1>
+
+  <form method="POST">
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label for="recipe-name">Recipe name</label>
+          <input type="text" class="form-control" placeholder="name" id="recipe-name" name="name"
+                 value="<%= (typeof recipe === 'undefined') ? '' : recipe.name %>">
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea type="text" class="form-control" id="description" name="description"><%= (typeof recipe === 'undefined') ? '' : recipe.description %></textarea>
+        </div>
+      </div>
+    </div>
+    <%# new recipe %>
+    <% if (typeof convertedRecipe === 'undefined') { %>
+      <% for(var i=0; i<3; i++) {%>
+      <div class="row justify-content-center">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="ingredient-select">Ingredients:</label>
+              <select id="ingredient-select" class="select" name="ingredients">
+                <% ingredients.forEach(function(ingredient){ %>
+                  <option value="<%= ingredient.id %>" ><%= ingredient.name %></option>
+                <% }); %>
+              </select>
+              <input type="text" class="form-control, labelFlex" width="100px" name="amount" placeholder="amount">
+            </div>
+          </div>
+        </div>
+      <% } %>
+  <%} else { %>
+      <% convertedRecipe._ingredients.forEach(function(oneIngredient){ %>
+        <div class="row justify-content-center mt-3">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="ingredient-select">Ingredients:</label>
+              <select id="ingredient-select" class="select" name="ingredients">
+                <% ingredients.forEach(function(ingredient){ %>
+                  <% var isSelected = (ingredient.name === oneIngredient.name) %>
+                  <option value="<%= ingredient.id %>" <%= isSelected ? 'selected' : '' %>><%= ingredient.name %></option>
+                <% }); %>
+              </select>
+              <input type="text" class="form-control, labelFlex" width="100px" name="amount"
+                     value="<%= oneIngredient.amount %>">
+              <label><%= oneIngredient.unit %></label>
+            </div>
+          </div>
+        </div>
+      <% }); %>
+    <% } %>
+
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-md-6">
+        <div class="row justify-content-between">
+          <div class="col-6">
+            <a class="btn btn-outline-secondary" href="/recipes">Cancel</a>
+          </div>
+          <div class="col-6">
+            <input type="submit" class="btn btn-primary float-right" value="<%= (typeof recipe === 'undefined') ? 'Add' : 'Modify' %>"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+<%- include('footer') -%>

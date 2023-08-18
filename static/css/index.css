@@ -1,0 +1,39 @@
+h1 {
+    width: 100%;
+    height: 40px;
+    margin-top: 30px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 58px;
+    text-align: center;
+    align-self: center;
+}
+
+.user-img {
+    align-self: center;
+    margin-top: 28px;
+}
+
+.user-menu-img {
+    align-self: flex-start;
+    margin: 20px;
+}
+
+input {
+    background: lightgray;
+    border-radius: 10px;
+    width: 100%;
+    height: 40px;
+    border: none;
+    align-self: center;
+    padding-left: 10px;
+}
+
+.labelFlex {
+    width: 100px;
+}
+
+.background {
+    background-color: #7abaff;
+}

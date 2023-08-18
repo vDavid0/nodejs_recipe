@@ -1,0 +1,34 @@
+<%- include('header') -%>
+
+<div class="container">
+    <%- include('navbar', {active: 'recipes'}) -%>
+
+    <h1>Recipes</h1>
+    <div class="row mt-5">
+        <% convertedRecipes.forEach(function(oneRecipe){ %>
+            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= oneRecipe.name %></h5>
+                        <p class="card-text"><%= oneRecipe.description %></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <% oneRecipe._ingredients.forEach(function(oneIngredient){ %>
+                            <li class="list-group-item"> <%= oneIngredient.name %> (<%= oneIngredient.amount %> <%= oneIngredient.unit %>)</li>
+                        <% }); %>
+                    </ul>
+                    <div class="card-body">
+                        <a class="fa fa-pencil-square-o btn btn-sm btn-primary" href="/recipes/mod/<%= oneRecipe.id %>" aria-hidden="true"></a>
+                        <a class="fa fa-trash btn btn-sm btn-danger" href="/recipes/del/<%= oneRecipe.id %>"></a>
+                    </div>
+                </div>
+            </div>
+    <% }); %>
+    </div>
+</div>
+
+<div class="row justify-content-center m-5">
+    <a class="btn btn-lg btn-primary" href="/recipes/new">New recipe</a>
+</div>
+
+<%- include('footer') -%>

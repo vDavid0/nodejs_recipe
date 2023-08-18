@@ -1,0 +1,43 @@
+<%- include('header') -%>
+
+<div class="container">
+  <h1>
+    <% if (typeof ingredient === 'undefined') { %>
+      New Ingredient
+    <% }else{ %>
+      Modify Ingredient
+    <% } %>
+  </h1>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-12 col-md-6">
+
+      <form method="POST" >
+        <div class="form-group">
+          <label for="name">Ingredient name</label>
+          <input type="text" class="form-control" placeholder="name" id="name" name="name"
+                 value="<%= (typeof ingredient === 'undefined') ? '' : ingredient.name %>">
+        </div>
+
+        <div class="form-group">
+          <label for="unit">Ingredient Unit</label>
+          <input type="text" class="form-control" placeholder="unit" id="unit" name="unit"
+                 value="<%= (typeof ingredient === 'undefined') ? '' : ingredient.unit %>">
+        </div>
+        <input type="submit" class="btn btn-primary" value="<%= (typeof ingredient === 'undefined') ? 'Add' : 'Modify' %>"/>
+
+        <div class="row justify-content-between mt-4">
+          <div class="col-3">
+            <a class="btn btn-outline-secondary" href="/ingredients">Cancel</a>
+          </div>
+          <div class="col-3">
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<%- include('footer') -%>

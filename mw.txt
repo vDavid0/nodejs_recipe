@@ -1,0 +1,121 @@
+renderMW:
+-sends HTML to user
+
+inverseAuthMW(): 
+- checks if user is logged in. If yes, redirects to /recipes, else calls next().
+
+loginMW():
+- If no POST data received, calls next.
+- Receives 2 form fields (username and password).
+- Asks the DB if this user exists.
+    -  If the user exists, check if the input password matches the password in the DB.
+        -  If the passwords are matching, store in session that user logged in, and redirect to /images. 
+        - Else show error message (res.locals error) and next()
+
+signupMW():
+- If no POST data received, calls next.
+- Else, checks if the provided username is taken.
+    -  if the username is taken, show error.
+    - Else, insert user to DB and next()
+
+newPasswordMW():
+- Checks if username is received. 
+    - If true, overrides the users password and console.log the new password
+
+authMW(): 
+- checks if user is logged in.
+    -  If yes calls next().
+    - Else, redirects to /login 
+
+getRecipesMW():
+    - Gets the recipes of a logged in user from the DB.
+
+saveRecipeMW():
+- Checks if the right fields are received based on POST.
+    - If true, save to Db and redirect to /recipes
+    - Else, redirect to /recipes/new
+
+getRecipeMW():
+        - Gets the recipe based on the recipeid (from the url) and the userid (from session) from the DB, and save it to res.locals.recipe, finally calls next.
+        - If the image is not found, redirects to /recipes
+
+deleteRecipeMW():
+- Delete the recipe from db
+
+logoutMW():
+- Logs out the user, redirect to /
+
+getIngredientsMW()
+saveIngredientMW()
+getIngredientMW()
+deleteIngredientMW()
+
+
+Route:
+
+Visitor:
+	GET|POST       /                            Login screen
+        - inverseAuthMW()
+        - loginMW()
+        - renderMW(’login.html’).            
+
+	GET|POST      /signup                       Signup form input processing
+        - inverseAuthMW()
+        - signupMW()
+        - loginMW()
+        - renderMW(‘signup.html’)
+
+	GET|POST       /forgotpw                    Forgot password screen
+        - inverseAuthMW()
+        - newPasswordMW()
+        - renderMW(‘forgotpw.html’)       
+
+
+
+Recipes:
+	GET      /recipes                          Recipe list screen
+        - authMW()
+        - getRecipesMW()
+        - renderMW(‘recipes.html’)  
+
+	GET      /recipes/new                      New recipe
+        - authMW()
+        - renderMW(‘newRecipe.html’)  
+	POST    /recipes/new                       New recipe
+        - authMW()
+        - saveRecipeMW()
+
+	GET      /recipes/mod/:recipe_id           Modify recipe
+        - authMW()
+        - getRecipeMW()
+        - renderMW(‘modifyRecipe.html’)  
+	POST    /recipes/mod/:recipe_id            Modify recipe
+        - authMW()
+        - getRecipeMW()
+        - saveRecipeMW()
+
+	GET     /recipes/del/:recipe_id           Delete recipe and redirect
+        - authMW()
+        - getRecipeMW()
+        - deleteRecipeMW()
+
+
+
+
+
+Ingredients:
+    - GET    /ingredients                            Ingredient list screen
+
+    - GET    /ingredients/new                        Add new ingredient
+    - POST   /ingredients/new                        Add new ingredient
+
+    - GET    /ingredients/mod/:ingredient_id         Modify ingredient
+    - POST   /ingredients/del/:ingredient_id         Delete ingredient
+
+    - GET    /ingredients/del/:recipe_id             Delete ingredients and redirect
+
+
+
+    - GET    /logout                                 Log out and redirect
+        - authMW()
+        - logoutMW()

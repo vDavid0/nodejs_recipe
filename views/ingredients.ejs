@@ -1,0 +1,48 @@
+<%- include('header') -%>
+
+<div class="container">
+  <%- include('navbar', { active: 'ingredients'}) -%>
+
+  <h1>Ingredients</h1>
+  <div class="row justify-content-center mt-5">
+
+  <table class="table col-sm-12 col-md-6 justify-content-center">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Unit</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% ingredients.forEach(function(oneIngredient, index){ %>
+      <tr>
+        <th scope="row">
+          <%= index + 1%>
+        </th>
+        <td>
+          <%= oneIngredient.name %>
+        </td>
+        <td>
+          <%= oneIngredient.unit %>
+        </td>
+        <td>
+          <a href="/ingredients/mod/<%= oneIngredient._id %>" class="btn btn-sm btn-primary"><i class="fa fa-pencil-square-o"></i></a>
+          <a href="/ingredients/del/<%= oneIngredient._id %>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+        </td>
+      </tr>
+    <% }); %>
+
+    </tbody>
+  </table>
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <a class="btn btn-primary" href="/ingredients/new">New ingredient</a>
+  </div>
+
+</div>
+
+<%- include('footer') -%>
